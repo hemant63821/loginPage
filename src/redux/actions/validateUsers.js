@@ -1,15 +1,17 @@
 import { VALIDATE_USER_ACTION } from '../../core/constants/action'
-import { getUsers } from '../../utility/localStorage'
+import { getLoginData } from '../../utility/localStorage'
+import history from '../../history'
 
 export function validateUser(userData) {
+    console.log('check creden', userData, getLoginData())
     return dispatch => {
         dispatch(request())
-        const user = getUsers
+        const user = getLoginData()
         if (user.username === userData.username && user.password === userData.password) {
-            return success('valid')
+            history.push("/users")
         }
         else {
-            return failure('user not valid')
+            dispatch(failure({ error: 'invalid user' }))
         }
     }
 

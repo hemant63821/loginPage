@@ -6,13 +6,14 @@ import Footer from './Layout/footer/Footer'
 import UserDashboard from './containers/UserDashboard-Container'
 import PrivateRoute from './PrivateRoute/PrivateRoute'
 import ModelCard from './components/modelCard/ModelCard'
+import Users from './components/Users/Users'
 
 const wrappedRoutes = () => (
     <Fragment>
         <Header></Header>
         <div className="App" >
             <Route exact path="/users" component={UserDashboard} />
-            <Route path="*" component={ModelCard} />
+            {/* <Route path="*" component={ModelCard} /> */}
             {/* <Redirect to="/login"></Redirect> */}
         </div>
         <Footer></Footer>

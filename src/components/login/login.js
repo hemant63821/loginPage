@@ -7,12 +7,72 @@ import LockIcon from '@material-ui/icons/Lock';
 import Checkbox from '@material-ui/core/Checkbox';
 import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { connect } from 'react-redux';
+import { validateUser } from '../../redux/actions/validateUsers'
 
+class Login extends Component {
 
-export default class Login extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            username: '',
+            password: '',
+            errorUser: false,
+            errorPwd: false
+        }
+    }
+
+    handleSubmit = (username, password, erroruser, errorpwd) => {
+        const obj = {
+            username: username,
+            password: password
+        }
+        if (erroruser == false && errorpwd == false) {
+            this.props.validateUser(obj)
+        }
+    }
+
+    resetCredentials = () => {
+
+    }
+
+    handleChange = (e) => {
+        console.log('check e synthetic', e.target.id, e.target.value)
+        const value = e.target.value
+
+        if (e.target.id === 'username') {
+            if (value.length) {
+                this.setState({
+                    errorUser: false,
+                    username: value
+                })
+            }
+            else {
+                this.setState({
+                    errorUser: true,
+                    username: value
+                })
+            }
+        }
+
+        if (e.target.id === 'pwd') {
+            if (value.length) {
+                this.setState({
+                    errorPwd: false,
+                    password: value
+                })
+            }
+            else {
+                this.setState({
+                    errorPwd: true,
+                    password: value
+                })
+            }
+        }
+    }
 
     render() {
-
+        const { username, password, errorUser, errorPwd } = this.state
         return (
             <div className="container-fluid p-0">
                 <div className="loginContainer">
@@ -34,9 +94,19 @@ export default class Login extends Component {
                                 </Grid>
                                 <Grid item>
                                     <TextField id="username" className="w-100" label="Username"
+                                        onChange={(e) => this.handleChange(e)}
+                                        value={username}
                                         InputLabelProps={{
                                             style: { color: '#fff' }
                                         }} />
+
+                                    {
+                                        errorUser ?
+
+                                            (<span className="errorMsg">
+                                                * Please Enter User Name
+                                             </span>) : null
+                                    }
                                 </Grid>
                             </Grid>
                         </div>
@@ -50,10 +120,18 @@ export default class Login extends Component {
                                     <TextField id="pwd"
                                         label="Password"
                                         type="password"
-                                        // hintText="Password"
+                                        onChange={(e) => this.handleChange(e)}
+                                        value={password}
                                         InputLabelProps={{
                                             style: { color: '#fff' }
                                         }} />
+                                    {
+                                        errorPwd ?
+
+                                            (<span className="errorMsg">
+                                                * Please Enter Password
+                                             </span>) : null
+                                    }
                                 </Grid>
                             </Grid>
                         </div>
@@ -62,7 +140,6 @@ export default class Login extends Component {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-
                                         checked={true}
                                         // onChange={handleChange('checkedB')}
                                         style={{ color: '#fff', font: '12px' }}
@@ -74,7 +151,7 @@ export default class Login extends Component {
                         </div>
 
                         <div className="customButton text-center">
-                            <Button variant="contained" size="large" className="loginButton">
+                            <Button variant="contained" size="large" className="loginButton" onClick={() => this.handleSubmit(username, password, errorUser, errorPwd)} >
                                 Login
                             </Button>
                         </div>
@@ -85,3 +162,9 @@ export default class Login extends Component {
         )
     }
 }
+
+const mapStateToProps = state => ({
+})
+
+
+export default connect(mapStateToProps, { validateUser })(Login)

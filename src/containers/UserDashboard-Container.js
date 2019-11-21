@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './UserDashboard-Container.scss'
+import Users from '../components/Users/Users'
 
 class UserDashboard extends Component {
 
@@ -7,6 +8,7 @@ class UserDashboard extends Component {
         return (
             <div className="page-content grey-bg">
                 <div className="modelContainer">
+                    <Users></Users>
                 </div>
             </div>
         )
