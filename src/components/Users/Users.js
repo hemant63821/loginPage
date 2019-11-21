@@ -14,7 +14,7 @@ class Users extends Component {
                 {
                     this.props.users.length ? this.props.users.map((itr) => {
                         return (
-                            <ModelCard></ModelCard>
+                            <ModelCard name={itr.name} key={itr.id}></ModelCard>
                         )
                     }) : null
                 }
