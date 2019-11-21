@@ -9,13 +9,14 @@ export function validateUser(userData) {
         const user = getLoginData()
         if (user.username === userData.username && user.password === userData.password) {
             history.push("/users")
+            dispatch(success({ isValidUser: true }))
         }
         else {
-            dispatch(failure({ error: 'invalid user' }))
+            dispatch(failure({ error: false }))
         }
     }
 
     function request() { return { type: VALIDATE_USER_ACTION.REQUEST } }
-    function success(user) { return { type: VALIDATE_USER_ACTION.SUCCESS, payload: { ...user } } }
+    function success(isValidUser) { return { type: VALIDATE_USER_ACTION.SUCCESS, payload: { ...isValidUser } } }
     function failure(error) { return { type: VALIDATE_USER_ACTION.FAILURE, payload: { error } } }
 }

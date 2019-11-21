@@ -14,8 +14,8 @@ export default function validateUser(state = intialState, action) {
 
         case VALIDATE_USER_ACTION.SUCCESS:
             console.log('action.payload', action.payload)
-            const { user } = action.payload;
-            return newState(state, { user })
+            const { isValidUser } = action.payload;
+            return newState(state, { isValidUser })
 
         case VALIDATE_USER_ACTION.FAILURE:
             console.log('action.payload', action.payload.error)

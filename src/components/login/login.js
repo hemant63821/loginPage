@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import { connect } from 'react-redux';
 import { validateUser } from '../../redux/actions/validateUsers'
+import Notify from '../../utility/SnackBar'
 
 class Login extends Component {
 
@@ -16,7 +17,8 @@ class Login extends Component {
         username: '',
         password: '',
         errorUser: false,
-        errorPwd: false
+        errorPwd: false,
+        openSnackBar: false
     }
 
     handleSubmit = (username, password, erroruser, errorpwd) => {
@@ -40,7 +42,7 @@ class Login extends Component {
     }
 
     handleChange = (e) => {
-        console.log('check e synthetic', e.target.id, e.target.value)
+        // console.log('check e synthetic', e.target.id, e.target.value)
         const value = e.target.value
 
         if (e.target.id === 'username') {
@@ -76,9 +78,32 @@ class Login extends Component {
 
     render() {
         console.log('check user calthc', this.props.validUser)
+        let notify = false
+        if (this.props.validUser == false) {
+            notify = true
+        }
+
+        if (this.props.validUser == true) {
+            notify = false
+        }
+
         const { username, password, errorUser, errorPwd } = this.state
         return (
             <div className="container-fluid p-0">
+
+                {
+                    this.props.validUser == false ? (
+                        <Notify
+                            type='error'
+                            open={notify}
+                            autoHideDuration={500}
+                            onClose={() => {
+                                notify = false
+                            }}
+                            message={'Invalid Credentials'}>
+                        </Notify>
+                    ) : null
+                }
                 <div className="loginContainer">
                     <div className="wrap-login">
 
@@ -168,7 +193,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-    // validUser: state
+    validUser: state.validateUser.error
 })
 
 
