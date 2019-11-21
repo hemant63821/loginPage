@@ -6,12 +6,7 @@ export function allUsers() {
     return dispatch => {
         dispatch(request())
         const users = getUsers()
-        if (users) {
-            dispatch(success(users))
-        }
-        else {
-            dispatch(success({ users: {} }))
-        }
+        dispatch(success({ users }))
     }
 
     function request() { return { type: USER_ACTION.REQUEST } }

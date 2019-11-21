@@ -13,12 +13,12 @@ export default function allUsersReducer(state = intialState, action) {
             return newState(state)
 
         case USER_ACTION.SUCCESS:
-            console.log('action.payload', action.payload)
+            console.log('action.payload users', action.payload)
             const { users } = action.payload;
             return newState(state, { users })
 
         case USER_ACTION.FAILURE:
-            console.log('action.payload', action.payload.error)
+            console.log('action.payload users', action.payload.error)
             const { error } = action.payload.error
             return newState(state, { error, ...intialState })
 

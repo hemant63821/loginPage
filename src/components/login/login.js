@@ -12,14 +12,11 @@ import { validateUser } from '../../redux/actions/validateUsers'
 
 class Login extends Component {
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            username: '',
-            password: '',
-            errorUser: false,
-            errorPwd: false
-        }
+    state = {
+        username: '',
+        password: '',
+        errorUser: false,
+        errorPwd: false
     }
 
     handleSubmit = (username, password, erroruser, errorpwd) => {
@@ -30,10 +27,16 @@ class Login extends Component {
         if (erroruser == false && errorpwd == false) {
             this.props.validateUser(obj)
         }
+        this.resetCredentials()
     }
 
     resetCredentials = () => {
-
+        this.setState({
+            username: '',
+            password: '',
+            errorUser: false,
+            errorPwd: false
+        })
     }
 
     handleChange = (e) => {
@@ -72,6 +75,7 @@ class Login extends Component {
     }
 
     render() {
+        console.log('check user calthc', this.props.validUser)
         const { username, password, errorUser, errorPwd } = this.state
         return (
             <div className="container-fluid p-0">
@@ -164,7 +168,9 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
+    // validUser: state
 })
+
 
 
 export default connect(mapStateToProps, { validateUser })(Login)

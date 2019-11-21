@@ -1,14 +1,23 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { allUsers } from '../../redux/actions/allUserAction'
+import ModelCard from '../../components/modelCard/ModelCard'
 
 class Users extends Component {
     componentWillMount() {
         this.props.allUsers()
     }
     render() {
+        console.log('check all users check', this.props.users)
         return (
-            <div>
+            <div className="col-sm-12">
+                {
+                    this.props.users.length ? this.props.users.map((itr) => {
+                        return (
+                            <ModelCard></ModelCard>
+                        )
+                    }) : null
+                }
 
             </div>
         )
@@ -16,7 +25,7 @@ class Users extends Component {
 }
 
 const mapStateToProps = state => ({
-    // users: 
+    users: state.allUsers.users
 })
 
 export default connect(mapStateToProps, { allUsers })(Users);
