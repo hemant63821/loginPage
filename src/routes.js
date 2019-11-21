@@ -1,26 +1,32 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { Fragment } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import logIn from './components/login/login'
 import Header from './Layout/header/Header'
 import Footer from './Layout/footer/Footer'
 import UserDashboard from './containers/UserDashboard-Container'
+import PrivateRoute from './PrivateRoute/PrivateRoute'
+import ModelCard from './components/modelCard/ModelCard'
 
 const wrappedRoutes = () => (
-    <div>
+    <Fragment>
         <Header></Header>
         <div className="App" >
-            <Route exact path="users" component={UserDashboard} />
+            <Route exact path="/users" component={UserDashboard} />
+            <Route path="*" component={ModelCard} />
+            {/* <Redirect to="/login"></Redirect> */}
         </div>
         <Footer></Footer>
-    </div>
+    </Fragment>
 );
+
+
 
 const Router = () => (
     <main>
         <Switch>
             <Route exact path="/" component={logIn} />
             <Route exact path="/login" component={logIn} />
-            <Route path="/" component={wrappedRoutes} />
+            <PrivateRoute path="/" component={wrappedRoutes} />
         </Switch>
     </main>
 );
